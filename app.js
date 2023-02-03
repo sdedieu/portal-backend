@@ -3,6 +3,9 @@ const app = express();
 const cors = require("cors");
 const bp = require("body-parser");
 const port = 3000;
+const characters = require('./data/characters.json');
+const movies = require('./data/movies.json');
+const quotes = require('./data/quotes.json');
 
 app.use(cors());
 app.use(bp.json());
@@ -54,6 +57,18 @@ app.post("/login", (req, res) => {
 app.get("/user", (req, res) => {
   if (req.query.token === userToken) res.status(200).send({ user });
   else res.status(401).send(new Error("Not connected"));
+});
+
+app.get("/characters", (req, res) => {
+  res.status(200).send({ docs: characters });
+});
+
+app.get("/movies", (req, res) => {
+  res.status(200).send({ docs: movies });
+});
+
+app.get("/quotes", (req, res) => {
+  res.status(200).send({ docs: quotes });
 });
 
 app.listen(port, () => {
